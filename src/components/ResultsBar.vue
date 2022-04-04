@@ -86,4 +86,14 @@ export default {
     }
   }
 }
+
+@media (max-width: 768px) {
+  .results {
+    flex-direction: column;
+
+    &__box {
+      width: 100%;
+    }
+  }
+}
 </style>

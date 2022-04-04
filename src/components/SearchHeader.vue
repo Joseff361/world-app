@@ -45,7 +45,7 @@ export default defineComponent({
       }
 
       if (countryCode) {
-        const resp = await store.dispatch('fetchCountry', countryCode);
+        await store.dispatch('fetchCountry', countryCode);
       }
     };
 
@@ -84,6 +84,17 @@ export default defineComponent({
 
   &__results {
     flex: 0.65;
+  }
+}
+
+@media (max-width: 1200px) {
+  .search-box {
+    flex-direction: column;
+    gap: 10px;
+
+    &__search {
+      padding-right: 0px;
+    }
   }
 }
 </style>

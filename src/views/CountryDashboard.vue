@@ -83,4 +83,48 @@ export default defineComponent({
     }
   }
 }
+
+@media (max-width: 768px) {
+  .dashboard {
+    height: auto;
+    width: 85vw;
+    padding: 10px 15px;
+
+    &__body {
+      &__content {
+        flex-direction: column;
+        gap: 20px;
+
+        &__map {
+          width: 100%;
+        }
+
+        &__info {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 8px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
 </style>

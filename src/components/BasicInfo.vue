@@ -35,7 +35,9 @@ export default {
         const languages = Object.keys(countriesObj).map(
           key => countriesObj[key]
         );
-        return languages.join(',');
+        return languages.length > 3
+          ? languages.slice(0, 3).join(',')
+          : languages.join(',');
       }),
       region: computed(() => {
         return store.state.country ? store.state.country.region : '-';
@@ -84,6 +86,19 @@ export default {
       align-items: center;
       justify-content: center;
       color: #000;
+    }
+  }
+}
+
+@media (max-width: 1200px) {
+  .results {
+    flex-direction: column;
+
+    &__info {
+      & strong {
+        font-size: 12px;
+        padding-top: 8px;
+      }
     }
   }
 }

@@ -37,4 +37,11 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
 }
+@media (max-width: 768px) {
+  .main {
+    height: auto;
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+}
 </style>
