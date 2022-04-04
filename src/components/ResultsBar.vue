@@ -2,21 +2,36 @@
   <div class="results">
     <div class="results__box --country">
       <span>Country</span>
-      <strong>-</strong>
+      <strong>{{ country }}</strong>
     </div>
     <div class="results__box --population">
       <span>Population</span>
-      <strong>-</strong>
+      <strong>{{ population }}</strong>
     </div>
     <div class="results__box --flag">
       <span>Flag</span>
-      <strong>-</strong>
+      <strong>
+        <img :src="flag" alt="Country Flag" />
+      </strong>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+import { useStore } from '@/store/index';
+import { computed } from '@vue/runtime-core';
+
+export default {
+  setup() {
+    const store = useStore();
+
+    return {
+      country: computed(() => store.state.country.name.common),
+      population: computed(() => store.state.country.population),
+      flag: computed(() => store.state.country.flags.png),
+    };
+  },
+};
 </script>
 
 <style lang="scss" scope>
@@ -45,6 +60,11 @@ export default {};
       align-items: center;
       justify-content: center;
       margin: 15px;
+    }
+
+    & img {
+      max-width: 80px;
+      height: auto;
     }
 
     &.--country {

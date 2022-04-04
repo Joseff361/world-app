@@ -41,7 +41,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .dashboard {
   width: 70vw;
-  height: 85vh;
+  height: 90vh;
   background-color: rgba(255, 255, 255, 0.5);
   border-radius: 16px;
   padding: 20px 25px;
@@ -75,6 +75,10 @@ export default defineComponent({
 
       &__map {
         width: 75%;
+      }
+
+      &__info {
+        width: 25%;
       }
     }
   }

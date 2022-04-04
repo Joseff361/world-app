@@ -1,11 +1,12 @@
 <template>
-  <main class="main">
+  <main v-if="!isEmpty" class="main">
     <CountryDashboard />
   </main>
 </template>
 
 <script lang="ts">
-import { defineAsyncComponent, defineComponent } from 'vue';
+import { computed, defineAsyncComponent, defineComponent } from 'vue';
+import { useStore } from '@/store/index';
 
 export default defineComponent({
   name: 'App',
@@ -13,6 +14,18 @@ export default defineComponent({
     CountryDashboard: defineAsyncComponent(
       () => import('@/views/CountryDashboard.vue')
     ),
+  },
+  setup() {
+    const store = useStore();
+
+    const init = async () => {
+      await store.dispatch('fetchCountry', 'PE');
+    };
+
+    init();
+    return {
+      isEmpty: computed(() => store.state.country === null),
+    };
   },
 });
 </script>

@@ -7,6 +7,7 @@
         list="countries"
         name="country-choice"
         id="country-selector"
+        @change="onSelect"
       />
       <datalist id="countries">
         <option
@@ -17,39 +18,41 @@
       </datalist>
     </div>
     <div class="search-box__results">
-      <div class="search-box__results__info">
-        <span>Language</span>
-        <strong>-</strong>
-      </div>
-      <div class="search-box__results__info">
-        <span>Region</span>
-        <strong>-</strong>
-      </div>
-      <div class="search-box__results__info">
-        <span>Currency</span>
-        <strong>-</strong>
-      </div>
-      <div class="search-box__results__info">
-        <span>Capital</span>
-        <strong>-</strong>
-      </div>
+      <BasicInfo />
     </div>
   </header>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineAsyncComponent, defineComponent, ref } from 'vue';
 import countriesList from '@/shared/countries';
+import { useStore } from '@/store/index';
 
 export default defineComponent({
   name: 'SearchHeader',
+  components: {
+    BasicInfo: defineAsyncComponent(() => import('@/components/BasicInfo.vue')),
+  },
   setup() {
     const countries = ref<Record<string, string>>(countriesList);
-    const countrySelected = ref(null);
+    const countrySelected = ref<string | null>();
+    const store = useStore();
+
+    const onSelect = async () => {
+      let countryCode = null;
+      for (let code in countries.value) {
+        if (countries.value[code] === countrySelected.value) countryCode = code;
+      }
+
+      if (countryCode) {
+        const resp = await store.dispatch('fetchCountry', countryCode);
+      }
+    };
 
     return {
       countries,
       countrySelected,
+      onSelect,
     };
   },
 });
@@ -81,32 +84,6 @@ export default defineComponent({
 
   &__results {
     flex: 0.65;
-    display: flex;
-    justify-content: space-between;
-    gap: 15px;
-
-    &__info {
-      display: flex;
-      flex-direction: column;
-      padding: 5px 10px;
-      background-color: #fff;
-      border-radius: 8px;
-      flex: 0.25;
-
-      span {
-        font-size: 12px;
-        color: rgba(0, 0, 0, 0.5);
-        flex: 0.2;
-      }
-
-      strong {
-        text-align: center;
-        flex: 0.8;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-    }
   }
 }
 </style>
