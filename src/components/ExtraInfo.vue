@@ -2,6 +2,7 @@
   <div v-if="maps.length > 0" class="extra">
     <a :href="maps" target="_blank">
       <img src="@/assets/google-maps.png" alt="Google Maps Logo" />
+      <span>Google Maps</span>
     </a>
   </div>
 </template>
@@ -34,6 +35,13 @@ export default {
   & a {
     display: block;
     width: 60%;
+    text-decoration: none !important;
+    color: inherit;
+    transition: 0.3s;
+
+    &:hover {
+      transform: scale(1.05);
+    }
   }
 
   & img {
