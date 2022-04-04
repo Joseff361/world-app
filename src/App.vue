@@ -1,11 +1,13 @@
 <template>
   <main class="main">
+    <PureLoader v-if="isLoading" />
     <CountryDashboard />
   </main>
 </template>
 
 <script lang="ts">
-import { defineAsyncComponent, defineComponent } from 'vue';
+import { computed, defineAsyncComponent, defineComponent } from 'vue';
+import { useStore } from '@/store/index';
 
 export default defineComponent({
   name: 'App',
@@ -13,6 +15,13 @@ export default defineComponent({
     CountryDashboard: defineAsyncComponent(
       () => import('@/views/CountryDashboard.vue')
     ),
+    PureLoader: defineAsyncComponent(() => import('@/views/PureLoader.vue')),
+  },
+  setup() {
+    const store = useStore();
+    return {
+      isLoading: computed(() => store.state.isLoading),
+    };
   },
 });
 </script>

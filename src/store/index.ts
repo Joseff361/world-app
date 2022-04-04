@@ -5,6 +5,7 @@ import countriesApi from '@/api/countriesApi';
 
 export interface CustomState {
   country: Country | null;
+  isLoading: boolean;
 }
 
 export const key: InjectionKey<Store<CustomState>> = Symbol();
@@ -12,6 +13,7 @@ export const key: InjectionKey<Store<CustomState>> = Symbol();
 export const store = createStore<CustomState>({
   state: {
     country: null,
+    isLoading: false,
   },
   getters: {
     getCountry: (state): Country | null => {
@@ -22,11 +24,16 @@ export const store = createStore<CustomState>({
     setCountry: (state, country: Country) => {
       state.country = country;
     },
+    setLoad: (state, isLoading: boolean) => {
+      state.isLoading = isLoading;
+    },
   },
   actions: {
     fetchCountry: async ({ commit }, countryCode) => {
       try {
+        commit('setLoad', true);
         const { data } = await countriesApi.get(countryCode);
+        commit('setLoad', false);
         if (data && data.length > 0) {
           commit('setCountry', data[0]);
           return true;
@@ -34,6 +41,7 @@ export const store = createStore<CustomState>({
           return;
         }
       } catch (e) {
+        commit('setLoad', false);
         return;
       }
     },
