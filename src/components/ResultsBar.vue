@@ -10,7 +10,7 @@
     </div>
     <div class="results__box --flag">
       <span>Flag</span>
-      <strong>
+      <strong v-if="flag.length > 0">
         <img :src="flag" alt="Country Flag" />
       </strong>
     </div>
@@ -26,9 +26,15 @@ export default {
     const store = useStore();
 
     return {
-      country: computed(() => store.state.country.name.common),
-      population: computed(() => store.state.country.population),
-      flag: computed(() => store.state.country.flags.png),
+      country: computed(() => {
+        return store.state.country ? store.state.country.name.common : '-';
+      }),
+      population: computed(() => {
+        return store.state.country ? store.state.country.population : '-';
+      }),
+      flag: computed(() => {
+        return store.state.country ? store.state.country.flags.png : '';
+      }),
     };
   },
 };

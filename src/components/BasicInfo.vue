@@ -29,19 +29,27 @@ export default {
 
     return {
       languages: computed(() => {
+        if (!store.state.country) return '-';
+
         const countriesObj = store.state.country.languages;
         const languages = Object.keys(countriesObj).map(
           key => countriesObj[key]
         );
         return languages.join(',');
       }),
-      region: computed(() => store.state.country.region),
+      region: computed(() => {
+        return store.state.country ? store.state.country.region : '-';
+      }),
       currency: computed(() => {
+        if (!store.state.country) return '-';
+
         const currencyObj = store.state.country.currencies;
         const key = Object.keys(currencyObj)[0];
         return currencyObj[key].name;
       }),
-      capital: computed(() => store.state.country.capital[0]),
+      capital: computed(() => {
+        return store.state.country ? store.state.country.capital[0] : '-';
+      }),
     };
   },
 };

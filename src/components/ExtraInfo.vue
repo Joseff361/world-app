@@ -1,5 +1,5 @@
 <template>
-  <div class="extra">
+  <div v-if="maps.length > 0" class="extra">
     <a :href="maps" target="_blank">
       <img src="@/assets/google-maps.png" alt="Google Maps Logo" />
     </a>
@@ -15,7 +15,9 @@ export default {
     const store = useStore();
 
     return {
-      maps: computed(() => store.state.country.maps.googleMaps),
+      maps: computed(() => {
+        return store.state.country ? store.state.country.maps.googleMaps : '';
+      }),
     };
   },
 };

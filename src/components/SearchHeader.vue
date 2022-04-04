@@ -35,7 +35,7 @@ export default defineComponent({
   },
   setup() {
     const countries = ref<Record<string, string>>(countriesList);
-    const countrySelected = ref<string | null>();
+    const countrySelected = ref<string | null>(null);
     const store = useStore();
 
     const onSelect = async () => {
